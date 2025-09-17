@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jogo da Velha</title>
+  <link rel="stylesheet" href="PAM_Todo_Tarefas/style.css" />
+  <link rel="manifest" href="PAM_Todo_Tarefas/manifest.json" />
+  <link rel="icon" href="PAM_Todo_Tarefas/icons/icon-192.png" />
+</head>
+<body>
+  <h1>Jogo da Velha</h1>
+  <div class="board" id="board"></div>
+  <p id="status"></p>
+  <button onclick="resetGame()">Reiniciar</button>
+
+  <script src="PAM_Todo_Tarefas/script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker registrado', reg))
+        .catch(err => console.error('Erro ao registrar Service Worker', err));
+    }
+
+    // Na primeira parte temos um vinculo das paginas criadas com o index.html
+    // Já aqui a baixo ele faz a parte logica de registro do service work e devolve a mensagem no dev tools se foi registrado ou não
+  </script>
+</body>
+</html>
