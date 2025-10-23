@@ -1,7 +1,13 @@
-const numeros = [5, 10, 3, 7];
+function somaArray(numeros) {
 
-const somar = (array) => array.reduce((total, numero) => total + numero, 0);
+   let soma = 0;
 
-const resultado = somar(numeros);
+    for (let i = 0; i <= array.length; i++) {
+        soma += numeros[i];   
+    }
+    
+    const array = [10,15,20,25,30];
+    const resultado = somaArray(numeros);  
+}
 
-console.log("A soma dos números é:", resultado);
+console.log("A soma dos numeros é: ", resultado )
