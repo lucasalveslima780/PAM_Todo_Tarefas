@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atividade Login Unificado</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+
+  <script type="module">
+    import { app } from './firebase-config.js';
+    import FirebaseAuthService from './FirebaseAuthService.js';
+
+    const authService = new FirebaseAuthService(app);
+
+    const loginSection = document.getElementById('loginSection');
+    const cadastroSection = document.getElementById('cadastroSection');
+    const perfilSection = document.getElementById('perfilSection');
+
+    
+    window.mostrarTela = (tela) => {
+      [loginSection, cadastroSection, perfilSection].forEach(sec => sec.style.display = 'none');
+      document.getElementById(tela).style.display = 'block';
+    };
+
+    
+    document.getElementById('loginForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const email = e.target.email.value;
+      const senha = e.target.senha.value;
+      authService.loginComEmailESenha(email, senha);
+    });
+
+    
+    document.getElementById('cadastroForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const email = e.target.email.value;
+      const senha = e.target.senha.value;
+      authService.criarUsuarioComEmailESenha(email, senha);
+    });
+
+    
+    window.logout = () => authService.logout();
+
+    
+    authService.observarAuth(user => {
+      if (user) {
+        document.getElementById('userEmail').textContent = user.email;
+        mostrarTela('perfilSection');
+      } else {
+        mostrarTela('loginSection');
+      }
+    });
+  </script>
+</head>
+
+<body>
+
+  <section id="loginSection" style="display: none;">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input type="email" name="email" placeholder="E-mail" required>
+      <input type="password" name="senha" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p>Não tem conta? <a href="#" onclick="mostrarTela('cadastroSection')">Cadastre-se</a></p>
+  </section>
+
+ 
+  <section id="cadastroSection" style="display: none;">
+    <h1>Cadastro</h1>
+    <form id="cadastroForm">
+      <input type="email" name="email" placeholder="E-mail" required>
+      <input type="password" name="senha" placeholder="Senha" required>
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p>Já tem conta? <a href="#" onclick="mostrarTela('loginSection')">Faça login</a></p>
+  </section>
+
+ 
+  <section id="perfilSection" style="display: none;">
+    <h1>Bem-vindo!</h1>
+    <p>Logado como: <span id="userEmail"></span></p>
+    <button onclick="logout()">Sair</button>
+  </section>
+</body>
+</html>
