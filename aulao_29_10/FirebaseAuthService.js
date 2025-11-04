@@ -6,20 +6,17 @@ class FirebaseAuthService{
     constructor(app){
         this.#auth = getAuth (app);
 }
-};
-
-export default FirebaseAuthService;
 
 criarUsuarioComEmailESenha(email, senha){
+    createUserWithEmailAndPassword(this.#auth, email, senha)
+        .then((credenciaisdousuario) =>{
+            console.log("Usuario Criado com sucesso: ", credenciaisdousuario.user);
+        })
+        .catch((error) => {
+            console.error("Erro ao criar usuario: ", erro);
+        })
+    
+    }
+}
 
-    criarUsuarioComEmailESenha(this.#auth, email, senha)
-    
-    .then((credenciaisdousuario)
-    
-    )
-    
-    .cath(()error) => {
-    
-    }
-    
-    }
+export default FirebaseAuthService;
